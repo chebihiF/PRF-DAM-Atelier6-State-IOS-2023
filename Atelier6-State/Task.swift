@@ -7,8 +7,15 @@
 
 import Foundation
 
-struct Task {
+class Task : ObservableObject {
+    
+    internal init(name: String, isComplete: Bool, lastComplete: Date? = nil){
+        self.name = name
+        self.isComplete = isComplete
+        self.lastComplete = lastComplete
+    }
+    
     let name: String
-    var isComplete: Bool
+    @Published var isComplete: Bool
     var lastComplete: Date?
 }

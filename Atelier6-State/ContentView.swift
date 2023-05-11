@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ContentView: View {
     
-    @State private var theTask = Task(name: "Learn IOS with SwiftUI", isComplete: false, lastComplete: nil)
+    @StateObject private var theTask = Task(name: "Learn IOS with SwiftUI", isComplete: false, lastComplete: nil)
     
     var body: some View {
         VStack{
@@ -17,27 +17,27 @@ struct ContentView: View {
                 Image(systemName: theTask.isComplete ? "checkmark.square" : "square")
                 Text(theTask.name)
             }
-            ControlPanel(theTask: self.$theTask)
+            ControlPanel(isComplete: self.$theTask.isComplete)
         }
     }
 }
 
 struct ControlPanel: View {
-    @Binding var theTask: Task
+    @Binding var isComplete: Bool
     var body: some View {
-        HStack{
+        if(!isComplete){
             Button(action: {
-                theTask.isComplete = true
+                isComplete = true
             }){
                 Text("Mark Complete")
-            }.padding(.horizontal)
-            
+            }.padding(.top)
+        }else{
             Button(action: {
-                theTask.isComplete = false
+                isComplete = false
             }){
                 Text("Reset")
-            }
-        }.padding(.top)
+            }.padding(.top)
+        }
     }
 }
 
