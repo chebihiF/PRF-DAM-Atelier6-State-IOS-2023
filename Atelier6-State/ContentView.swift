@@ -8,16 +8,39 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    @State private var theTask = Task(name: "Learn IOS with SwiftUI", isComplete: false, lastComplete: nil)
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text("Hello, world!")
+        VStack{
+            HStack{
+                Image(systemName: theTask.isComplete ? "checkmark.square" : "square")
+                Text(theTask.name)
+            }
+            ControlPanel(theTask: self.$theTask)
         }
-        .padding()
     }
 }
+
+struct ControlPanel: View {
+    @Binding var theTask: Task
+    var body: some View {
+        HStack{
+            Button(action: {
+                theTask.isComplete = true
+            }){
+                Text("Mark Complete")
+            }.padding(.horizontal)
+            
+            Button(action: {
+                theTask.isComplete = false
+            }){
+                Text("Reset")
+            }
+        }.padding(.top)
+    }
+}
+
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
